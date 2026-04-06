@@ -1,0 +1,64 @@
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import { appRouter } from "./routers.js";
+import { createContext } from "./_core/context.js";
+import { registerAuthRoutes } from "./_core/auth.js";
+
+const app = express();
+
+app.use(cors({
+  origin: [
+    "http://10.3.138.19", 
+    "http://10.3.138.19:3000",
+    "http://localhost:3000",
+    "http://localhost",
+  ],
+  credentials: true
+}));
+
+app.use(cookieParser());
+app.use(express.json({ limit: "50mb" }));
+
+// auth
+registerAuthRoutes(app);
+
+// api
+app.use(
+  "/api/trpc",
+  createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  })
+);
+
+// === STATIC FILES (DEVE SER ANTES DE QUALQUER app.get("*")) ===
+const publicPath = path.resolve(process.cwd(), "public");
+
+// 1) serve assets com tipos MIME corretos
+app.use("/assets", express.static(path.join(publicPath, "assets"), {
+  setHeaders: (res, path) => {
+    if (path.endsWith(".js")) {
+      res.setHeader("Content-Type", "application/javascript");
+    } else if (path.endsWith(".css")) {
+      res.setHeader("Content-Type", "text/css");
+    }
+  }
+}));
+
+// 2) serve root
+app.use(express.static(publicPath));
+
+// === FALLBACK (DEVE SER O ÚLTIMO) ===
+app.get("*", (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
+
+// iniciar
+const PORT = process.env.PORT ?? 3000;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`[DEGASE CMS] Servidor rodando na porta ${PORT}`);
+});

@@ -1,0 +1,310 @@
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Plus, Edit, Trash2, Eye, Star } from 'lucide-react';
+import { toast } from 'sonner';
+import { trpc } from '@/lib/trpc';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { format } from 'date-fns';
+
+type Visibility = 'site' | 'intranet' | 'both';
+type Status = 'draft' | 'published' | 'archived' | 'scheduled';
+
+type Post = {
+  id: number;
+  title: string;
+  summary: string;
+  category: string;
+  status: Status;
+  featuredImage: string;
+  highlight: boolean;
+  responsible: string;
+  visibility: Visibility;
+  content: string;
+  createdAt: Date;
+  views: number;
+};
+
+const AdminPosts = () => {
+  const [showEditor, setShowEditor] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [title, setTitle] = useState('');
+  const [summary, setSummary] = useState('');
+  const [category, setCategory] = useState('');
+  const [status, setStatus] = useState<Status>('draft');
+  const [featuredImage, setFeaturedImage] = useState<File | null>(null);
+  const [highlight, setHighlight] = useState(false);
+  const [responsible, setResponsible] = useState('');
+  const [visibility, setVisibility] = useState<Visibility>('site');
+
+  const utils = trpc.useUtils();
+
+  const { data: posts, isLoading: postsLoading } = trpc.posts.list.useQuery();
+  const { data: categories } = trpc.categories.list.useQuery();
+  const { data: users } = trpc.users.list.useQuery();
+
+  const createMutation = trpc.posts.create.useMutation({
+    onSuccess: () => {
+      utils.posts.list.invalidate();
+      toast.success('Post criado com sucesso!');
+      resetForm();
+    },
+    onError: () => toast.error('Erro ao criar post.'),
+  });
+
+  const updateMutation = trpc.posts.update.useMutation({
+    onSuccess: () => {
+      utils.posts.list.invalidate();
+      toast.success('Post atualizado com sucesso!');
+      resetForm();
+    },
+    onError: () => toast.error('Erro ao atualizar post.'),
+  });
+
+  const deleteMutation = trpc.posts.delete.useMutation({
+    onSuccess: () => {
+      utils.posts.list.invalidate();
+      toast.success('Post deletado com sucesso!');
+    },
+    onError: () => toast.error('Erro ao deletar post.'),
+  });
+
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: '',
+  });
+
+  const resetForm = () => {
+    setShowEditor(false);
+    setEditingId(null);
+    setTitle('');
+    setSummary('');
+    setCategory('');
+    setStatus('draft');
+    setFeaturedImage(null);
+    setHighlight(false);
+    setResponsible('');
+    setVisibility('site');
+    editor?.commands.setContent('');
+  };
+
+  const editPost = (post: Post) => {
+    setEditingId(post.id);
+    setTitle(post.title);
+    setSummary(post.summary);
+    setCategory(post.category);
+    setStatus(post.status);
+    setHighlight(post.highlight);
+    setResponsible(post.responsible);
+    setVisibility(post.visibility);
+    editor?.commands.setContent(post.content);
+    setShowEditor(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!title || !summary || !category || !responsible || !editor?.getHTML()) {
+      toast.error('Preencha todos os campos obrigatórios.');
+      return;
+    }
+    const data = {
+      title,
+      summary,
+      category,
+      status,
+      featuredImage,
+      highlight,
+      responsible,
+      visibility,
+      content: editor.getHTML(),
+    };
+    if (editingId) {
+      updateMutation.mutate({ id: editingId, ...data });
+    } else {
+      createMutation.mutate(data);
+    }
+  };
+
+  const handleDelete = (id: number) => {
+    if (confirm('Tem certeza que deseja deletar este post?')) {
+      deleteMutation.mutate({ id });
+    }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('Imagem deve ter no máximo 5MB.');
+        return;
+      }
+      if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+        toast.error('Formato de imagem inválido. Use JPG, PNG ou WebP.');
+        return;
+      }
+      setFeaturedImage(file);
+    }
+  };
+
+  const getVisibilityLabel = (vis: Visibility) => {
+    switch (vis) {
+      case 'site': return 'Site DEGASE somente';
+      case 'intranet': return 'Intranet somente';
+      case 'both': return 'Site e Intranet';
+    }
+  };
+
+  const getStatusBadge = (stat: Status) => {
+    const colors = {
+      draft: 'bg-yellow-500',
+      published: 'bg-green-500',
+      archived: 'bg-gray-500',
+      scheduled: 'bg-blue-500',
+    };
+    const labels = {
+      draft: 'Rascunho',
+      published: 'Publicado',
+      archived: 'Arquivado',
+      scheduled: 'Agendado',
+    };
+    return <span className={`px-2 py-1 text-white rounded ${colors[stat]}`}>{labels[stat]}</span>;
+  };
+
+  if (postsLoading) return <div>Carregando...</div>;
+
+  return (
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Gerenciar Posts</h1>
+        <Button onClick={() => setShowEditor(true)}>
+          <Plus className="w-4 h-4 mr-2" />
+          Novo Post
+        </Button>
+      </div>
+
+      {showEditor ? (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            placeholder="Título"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+          <Textarea
+            placeholder="Resumo"
+            value={summary}
+            onChange={(e) => setSummary(e.target.value)}
+            required
+          />
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          >
+            <option value="">Selecione uma categoria</option>
+            {categories?.map((cat) => (
+              <option key={cat.id} value={cat.name}>{cat.name}</option>
+            ))}
+          </select>
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value as Status)}
+            className="w-full p-2 border rounded"
+          >
+            <option value="draft">Rascunho</option>
+            <option value="published">Publicado</option>
+            <option value="archived">Arquivado</option>
+            <option value="scheduled">Agendado</option>
+          </select>
+          <Input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={handleImageUpload}
+          />
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={highlight}
+              onChange={(e) => setHighlight(e.target.checked)}
+            />
+            <span>Destaque</span>
+          </label>
+          <select
+            value={responsible}
+            onChange={(e) => setResponsible(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          >
+            <option value="">Selecione um responsável</option>
+            {users?.map((user) => (
+              <option key={user.id} value={user.name}>{user.name}</option>
+            ))}
+          </select>
+          <select
+            value={visibility}
+            onChange={(e) => setVisibility(e.target.value as Visibility)}
+            className="w-full p-2 border rounded"
+          >
+            <option value="site">Site DEGASE somente</option>
+            <option value="intranet">Intranet somente</option>
+            <option value="both">Site e Intranet</option>
+          </select>
+          <div className="border rounded p-2">
+            <EditorContent editor={editor} />
+          </div>
+          <div className="flex space-x-2">
+            <Button type="submit" disabled={createMutation.isLoading || updateMutation.isLoading}>
+              {editingId ? 'Atualizar' : 'Criar'}
+            </Button>
+            <Button type="button" variant="outline" onClick={resetForm}>
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      ) : (
+        <table className="w-full table-auto border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border border-gray-300 p-2">Título</th>
+              <th className="border border-gray-300 p-2">Responsável</th>
+              <th className="border border-gray-300 p-2">Status</th>
+              <th className="border border-gray-300 p-2">Data</th>
+              <th className="border border-gray-300 p-2">Views</th>
+              <th className="border border-gray-300 p-2">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {posts?.map((post) => (
+              <tr key={post.id}>
+                <td className="border border-gray-300 p-2 flex items-center space-x-2">
+                  {post.highlight && <Star className="w-4 h-4 text-yellow-500" />}
+                  <span>{post.title}</span>
+                </td>
+                <td className="border border-gray-300 p-2">{post.responsible}</td>
+                <td className="border border-gray-300 p-2">{getStatusBadge(post.status)}</td>
+                <td className="border border-gray-300 p-2">{format(new Date(post.createdAt), 'dd/MM/yyyy')}</td>
+                <td className="border border-gray-300 p-2 flex items-center space-x-1">
+                  <Eye className="w-4 h-4" />
+                  <span>{post.views}</span>
+                </td>
+                <td className="border border-gray-300 p-2 flex space-x-2">
+                  <Button size="sm" onClick={() => editPost(post)}>
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                  <Button size="sm" variant="destructive" onClick={() => handleDelete(post.id)}>
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
+
+export default AdminPosts;

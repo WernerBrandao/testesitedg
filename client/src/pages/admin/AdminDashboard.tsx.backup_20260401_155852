@@ -1,0 +1,153 @@
+import { Button } from '@/components/ui/button';
+import { Plus, Edit, Trash2, Eye, Star, AlertTriangle } from 'lucide-react';
+import { trpc } from '@/lib/trpc';
+import { format } from 'date-fns';
+
+const AdminDashboard = () => {
+  // Queries com fallbacks robustos
+  const categoriesQuery = trpc.categories.list.useQuery();
+  const unitsQuery = trpc.units.list.useQuery();
+  const documentsQuery = trpc.documents.list.useQuery();
+  const postsQuery = trpc.posts.list.useQuery();
+  const videosQuery = trpc.videos.list.useQuery();
+  const servicesQuery = trpc.services.getAll.useQuery();
+
+  // Contadores para stats
+  const newsCount = postsQuery.data?.length || 0;
+  const categoriesCount = categoriesQuery.data?.length || 0;
+  const videosCount = videosQuery.data?.length || 0;
+  const unitsCount = unitsQuery.data?.length || 0;
+
+  // Verificar rascunhos (assumindo que posts têm status)
+  const drafts = postsQuery.data?.filter(post => post.status === 'draft') || [];
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-[var(--degase-blue-dark)]">Dashboard Administrativo</h1>
+      </div>
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[var(--degase-blue-light)]">
+          <h3 className="text-lg font-semibold text-[var(--degase-blue-dark)]">Notícias</h3>
+          <p className="text-2xl font-bold text-gray-800">{newsCount}</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[var(--degase-blue-light)]">
+          <h3 className="text-lg font-semibold text-[var(--degase-blue-dark)]">Categorias</h3>
+          <p className="text-2xl font-bold text-gray-800">{categoriesCount}</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[var(--degase-blue-light)]">
+          <h3 className="text-lg font-semibold text-[var(--degase-blue-dark)]">Vídeos</h3>
+          <p className="text-2xl font-bold text-gray-800">{videosCount}</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[var(--degase-blue-light)]">
+          <h3 className="text-lg font-semibold text-[var(--degase-blue-dark)]">Unidades</h3>
+          <p className="text-2xl font-bold text-gray-800">{unitsCount}</p>
+        </div>
+      </div>
+
+      {/* Alerta de Rascunhos */}
+      {drafts.length > 0 && (
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-8 rounded-lg flex items-center">
+          <AlertTriangle className="text-yellow-600 mr-2" />
+          <span className="text-yellow-800">Você tem {drafts.length} rascunho(s) pendente(s).</span>
+        </div>
+      )}
+
+      {/* Tabela: Últimas 5 Notícias Publicadas */}
+      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-xl font-semibold text-[var(--degase-blue-dark)] mb-4">Últimas 5 Notícias Publicadas</h2>
+        <table className="w-full table-auto">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-2 text-left">Título</th>
+              <th className="px-4 py-2 text-left">Data</th>
+              <th className="px-4 py-2 text-left">Status</th>
+              <th className="px-4 py-2 text-left">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {postsQuery.data?.slice(0, 5).map((post) => (
+              <tr key={post.id} className="border-b">
+                <td className="px-4 py-2">{post.title}</td>
+                <td className="px-4 py-2">{format(new Date(post.createdAt), 'dd/MM/yyyy')}</td>
+                <td className="px-4 py-2">
+                  <span className={`px-2 py-1 rounded-full text-xs ${post.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                    {post.status}
+                  </span>
+                </td>
+                <td className="px-4 py-2 flex space-x-2">
+                  <Button variant="outline" size="sm"><Eye /></Button>
+                  <Button variant="outline" size="sm"><Edit /></Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Tabela: Últimos 5 Documentos Adicionados */}
+      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-xl font-semibold text-[var(--degase-blue-dark)] mb-4">Últimos 5 Documentos Adicionados</h2>
+        <table className="w-full table-auto">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-2 text-left">Nome</th>
+              <th className="px-4 py-2 text-left">Data</th>
+              <th className="px-4 py-2 text-left">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {documentsQuery.data?.slice(0, 5).map((doc) => (
+              <tr key={doc.id} className="border-b">
+                <td className="px-4 py-2">{doc.name}</td>
+                <td className="px-4 py-2">{format(new Date(doc.createdAt), 'dd/MM/yyyy')}</td>
+                <td className="px-4 py-2 flex space-x-2">
+                  <Button variant="outline" size="sm"><Eye /></Button>
+                  <Button variant="outline" size="sm"><Edit /></Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Tabela: Últimos 5 Serviços Adicionados */}
+      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-xl font-semibold text-[var(--degase-blue-dark)] mb-4">Últimos 5 Serviços Adicionados</h2>
+        <table className="w-full table-auto">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-2 text-left">Nome</th>
+              <th className="px-4 py-2 text-left">Data</th>
+              <th className="px-4 py-2 text-left">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {servicesQuery.data?.slice(0, 5).map((service) => (
+              <tr key={service.id} className="border-b">
+                <td className="px-4 py-2">{service.name}</td>
+                <td className="px-4 py-2">{format(new Date(service.createdAt), 'dd/MM/yyyy')}</td>
+                <td className="px-4 py-2 flex space-x-2">
+                  <Button variant="outline" size="sm"><Eye /></Button>
+                  <Button variant="outline" size="sm"><Edit /></Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Card: Auditoria (estrutura base) */}
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-xl font-semibold text-[var(--degase-blue-dark)] mb-4">Auditoria</h2>
+        <p className="text-gray-600">Estrutura base para auditoria. Implementar logs de atividades aqui.</p>
+        {/* Adicionar conteúdo de auditoria conforme necessário */}
+      </div>
+    </div>
+  );
+};
+
+export default AdminDashboard;

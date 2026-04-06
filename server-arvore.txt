@@ -1,0 +1,46 @@
+server
+├── auth.logout.test.ts
+├── author.test.ts
+├── banners.test.ts
+├── cms.test.ts
+├── _core
+│   ├── auth.ts
+│   ├── context.ts
+│   ├── cookies.ts
+│   ├── dataApi.ts
+│   ├── env.ts
+│   ├── imageGeneration.ts
+│   ├── index.ts
+│   ├── jwt.ts
+│   ├── llm.ts
+│   ├── map.ts
+│   ├── notification.ts
+│   ├── oauth.ts
+│   ├── oauth.ts_old
+│   ├── sdk.ts
+│   ├── sdk.ts_old
+│   ├── systemRouter.ts
+│   ├── trpc.ts
+│   ├── types
+│   │   ├── cookie.d.ts
+│   │   └── manusTypes.ts
+│   ├── vite.ts
+│   └── voiceTranscription.ts
+├── csv-importer.ts
+├── db.ts
+├── email.ts
+├── features.test.ts
+├── menu-permissions.test.ts
+├── password.ts
+├── pdf-generator.ts
+├── routers.ts
+├── scheduler.test.ts
+├── scheduler.ts
+├── search.test.ts
+├── service-analytics.test.ts
+├── services.test.ts
+├── storage.ts
+├── upload.test.ts
+└── users.test.ts
+
+3 directories, 41 files

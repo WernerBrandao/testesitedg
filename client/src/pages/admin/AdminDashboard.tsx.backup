@@ -1,0 +1,156 @@
+import React from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { trpc } from '@/lib/trpc';
+import { Eye, Download, MousePointer, AlertTriangle } from 'lucide-react';
+import { format } from 'date-fns';
+
+const AdminDashboard: React.FC = () => {
+  // Queries com fallbacks
+  const postsQuery = trpc.posts.getAll.useQuery();
+  const documentsQuery = trpc.documents.getAll.useQuery();
+  const servicesQuery = trpc.services.getAll.useQuery();
+  const categoriesQuery = trpc.categories.getAll.useQuery();
+  const videosQuery = trpc.videos.getAll.useQuery();
+  const unitsQuery = trpc.units.getAll.useQuery();
+
+  const posts = postsQuery.data || [];
+  const documents = documentsQuery.data || [];
+  const services = servicesQuery.data || [];
+  const categories = categoriesQuery.data || [];
+  const videos = videosQuery.data || [];
+  const units = unitsQuery.data || [];
+
+  // Contadores para stats
+  const publishedPostsCount = posts.filter(p => p.status === 'published').length;
+  const draftPostsCount = posts.filter(p => p.status === 'draft').length;
+  const categoriesCount = categories.length;
+  const videosCount = videos.length;
+  const unitsCount = units.length;
+
+  // Últimas 5 notícias publicadas
+  const last5PublishedPosts = posts
+    .filter(p => p.status === 'published')
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 5);
+
+  // Últimos 5 documentos
+  const last5Documents = documents
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 5);
+
+  // Últimos 5 serviços
+  const last5Services = services
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 5);
+
+  return (
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <h1 className="text-2xl font-bold mb-6">PAINEL ADMINISTRATIVO</h1>
+
+      {/* Alerta de Rascunhos */}
+      {draftPostsCount > 0 && (
+        <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-6 flex items-center">
+          <AlertTriangle className="mr-2" />
+          ⚠️ ALERTA: {draftPostsCount} notícia(s) em rascunho
+        </div>
+      )}
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="bg-white p-4 border rounded shadow">Notícias: {publishedPostsCount}</div>
+        <div className="bg-white p-4 border rounded shadow">Categorias: {categoriesCount}</div>
+        <div className="bg-white p-4 border rounded shadow">Vídeos: {videosCount}</div>
+        <div className="bg-white p-4 border rounded shadow">Unidades: {unitsCount}</div>
+      </div>
+
+      {/* Últimas 5 Notícias Publicadas */}
+      <div className="bg-white p-4 border rounded shadow mb-6">
+        <h2 className="text-lg font-semibold mb-4">📰 Últimas 5 Notícias Publicadas</h2>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Título</TableHead>
+              <TableHead>Data</TableHead>
+              <TableHead>Autor</TableHead>
+              <TableHead>Visibilidade</TableHead>
+              <TableHead>👁 Views</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {last5PublishedPosts.map(post => (
+              <TableRow key={post.id}>
+                <TableCell>{post.title}</TableCell>
+                <TableCell>{format(new Date(post.createdAt), 'dd/MM/yyyy HH:mm')}</TableCell>
+                <TableCell>{post.author}</TableCell>
+                <TableCell><Badge>{post.visibility}</Badge></TableCell>
+                <TableCell><Eye className="inline mr-1" />{post.views}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Últimos 5 Documentos Adicionados */}
+      <div className="bg-white p-4 border rounded shadow mb-6">
+        <h2 className="text-lg font-semibold mb-4">📄 Últimos 5 Documentos Adicionados</h2>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Nome</TableHead>
+              <TableHead>Data</TableHead>
+              <TableHead>Visibilidade</TableHead>
+              <TableHead>⬇️ Downloads</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {last5Documents.map(doc => (
+              <TableRow key={doc.id}>
+                <TableCell>{doc.name}</TableCell>
+                <TableCell>{format(new Date(doc.createdAt), 'dd/MM/yyyy HH:mm')}</TableCell>
+                <TableCell><Badge>{doc.visibility}</Badge></TableCell>
+                <TableCell><Download className="inline mr-1" />{doc.downloadCount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Últimos 5 Serviços Adicionados */}
+      <div className="bg-white p-4 border rounded shadow mb-6">
+        <h2 className="text-lg font-semibold mb-4">🔧 Últimos 5 Serviços Adicionados</h2>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Nome</TableHead>
+              <TableHead>Data</TableHead>
+              <TableHead>Visibilidade</TableHead>
+              <TableHead>🖱️ Cliques</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {last5Services.map(service => (
+              <TableRow key={service.id}>
+                <TableCell>{service.name}</TableCell>
+                <TableCell>{format(new Date(service.createdAt), 'dd/MM/yyyy HH:mm')}</TableCell>
+                <TableCell><Badge>{service.visibility}</Badge></TableCell>
+                <TableCell><MousePointer className="inline mr-1" />{service.clickCount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Auditoria */}
+      <div className="bg-white p-4 border rounded shadow">
+        <h2 className="text-lg font-semibold mb-4">📊 Auditoria (Estrutura Base)</h2>
+        <p>Card vazio para implementação futura.</p>
+      </div>
+    </div>
+  );
+};
+
+export default AdminDashboard;

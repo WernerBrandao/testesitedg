@@ -1,0 +1,1175 @@
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
+-- MySQL dump 10.13  Distrib 8.0.45, for Linux (x86_64)
+--
+-- Host: localhost    Database: portal_db
+-- ------------------------------------------------------
+-- Server version	8.0.45
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `__drizzle_migrations`
+--
+
+DROP TABLE IF EXISTS `__drizzle_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `__drizzle_migrations` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `hash` text NOT NULL,
+  `created_at` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `__drizzle_migrations`
+--
+
+LOCK TABLES `__drizzle_migrations` WRITE;
+/*!40000 ALTER TABLE `__drizzle_migrations` DISABLE KEYS */;
+INSERT INTO `__drizzle_migrations` VALUES (1,'814a08e40d7fc2bcfd458759d18319198ca8ae394f2fa15617a78678e9c9c93b',1771891729376),(2,'1203373081db2851ac41cd4eadcca393ed7af85cfbc60187a0b2dd9fd0477a25',1771893377710),(3,'f36749280f58a969265ab4e1687f3acde9df58d68e7465d91395cda8be0d75be',1771952433916),(4,'6bebbc610394d9341aaa5ca733de66615b95908184289354d93d975819bc5fe2',1771952845629),(5,'55de0dcd14a9423651535b202e95fd92febe94970aafbd57241690f7cf4388a6',1771953516360),(6,'2b16b4ad2242d5d6deab76df0bd8aea438c4a2d8227b08eeba6075948548df31',1771953923694),(7,'2953aead38297cd848c4d306a6344db60c81ec1645b4c73c048811ba08356a32',1771954301906),(8,'04594f3857b16f08f1db9d307c498eb34448bea5435d83aa0820d8c557c97b74',1771955241410),(9,'1d65b119f14935c8b328be99e57304e284552f5d9bb14eff50cc488afda16281',1772032759261),(10,'0682ded3c11ffc7cd1e764e2ef56b7e69f503a73b6d249ed13b0bef629372f10',1772033032603),(11,'9d5a7260d2641ec411c6e0cc2b0fa0893e70a62460e097df226b2783cf73a61f',1772107168523),(12,'044056be88fb79de9f6fc149ee2e96486c594094da42e7bf213f2bc75ef68a5d',1772110321299),(13,'878360e92416bd0af6a7c211712f10b6275f7d9848ecec860074467c0469bff3',1772127429494),(14,'dfba61868a2d5d0dcf8378aa73bd85601fca6df51889d7eb8320d54550d9ccb5',1772128386156),(15,'b70f5d6b41095d588c4cf66b47a0e80772189d12f788b417fcc10ccbf4cd5b9e',1772227739524),(16,'ace3d965cafe5239ee41c5db02be4210449ff8d708966dbcfdceefc1eaf9ec0b',1772228174216),(17,'84b5f6cab4f62fb62d48dc3c45015708aacda45d8e6b9dd3a9f1a483d6acbe28',1772285282784),(18,'18b4ee7d57b3b9169fd25d6290ba3f438676fbc71947996771e0d4ccfdcbdab2',1772287235622),(19,'4dbec0bc08d72f2db906c38dbdd9e704cb831f796f1f539c1521befc7a20cfcb',1772288431193),(20,'104ed0f35bade3c4f035f8f2afd29d36dc4b2906fd87d75ecae6bdb55fe80722',1772289106324),(21,'7e80bb32ebf2298d24c21d43c32764a415fab0d7683985f3c479f791b415e61d',1772455269858),(22,'5a272b9098d876b9efdfdb537c85e9b3681dc4861e066efe6712a759be95106a',1772472814566),(23,'b6d8d81d748acb71aa679da5ebc3906d1fe34710fa12c7d997af0bc69faf6517',1772477822373),(24,'eb13d6f81a99336678d34c816b9d7e6e2650612dca483867c8ad5b1da6bebe49',1772487631920),(25,'4b3697b11090c0275703690b68d43245717578f1b1236f2f9bf1228913df88fe',1772534348243),(26,'1b96d47651ce4a034f29232568f837e9b9bb6d0b338f9a04abf21c2557af4a32',1772940980749);
+/*!40000 ALTER TABLE `__drizzle_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `analytics`
+--
+
+DROP TABLE IF EXISTS `analytics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `analytics` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `postId` int DEFAULT NULL,
+  `pageUrl` varchar(1024) DEFAULT NULL,
+  `viewCount` int NOT NULL DEFAULT '0',
+  `uniqueVisitors` int NOT NULL DEFAULT '0',
+  `avgTimeOnPage` int NOT NULL DEFAULT '0',
+  `bounceRate` int NOT NULL DEFAULT '0',
+  `date` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `analytics`
+--
+
+LOCK TABLES `analytics` WRITE;
+/*!40000 ALTER TABLE `analytics` DISABLE KEYS */;
+/*!40000 ALTER TABLE `analytics` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `audit_logs`
+--
+
+DROP TABLE IF EXISTS `audit_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `audit_logs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `userId` int NOT NULL,
+  `action` varchar(64) NOT NULL,
+  `entityType` varchar(64) NOT NULL,
+  `entityId` int DEFAULT NULL,
+  `changes` text,
+  `ipAddress` varchar(45) DEFAULT NULL,
+  `userAgent` varchar(500) DEFAULT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'success',
+  `errorMessage` text,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`),
+  KEY `audit_logs_userId_users_id_fk` (`userId`),
+  CONSTRAINT `audit_logs_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `audit_logs`
+--
+
+LOCK TABLES `audit_logs` WRITE;
+/*!40000 ALTER TABLE `audit_logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `audit_logs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `banners`
+--
+
+DROP TABLE IF EXISTS `banners`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `banners` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `subtitle` text,
+  `imageUrl` text NOT NULL,
+  `linkUrl` text,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  `visibility` enum('site','intranet','both') NOT NULL DEFAULT 'site',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `banners`
+--
+
+LOCK TABLES `banners` WRITE;
+/*!40000 ALTER TABLE `banners` DISABLE KEYS */;
+INSERT INTO `banners` VALUES (1,'ESGSE',NULL,'/uploads/images/1773076300463-bp9w0l.jpg',NULL,0,1,'2026-03-09 17:12:02','2026-03-09 17:12:02','site'),(2,'Ouvidoria',NULL,'/uploads/images/1773076336389-ac0dqr.png',NULL,0,1,'2026-03-09 17:12:29','2026-03-09 17:12:29','site');
+/*!40000 ALTER TABLE `banners` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `categories`
+--
+
+DROP TABLE IF EXISTS `categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `categories` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `description` text,
+  `color` varchar(7) DEFAULT NULL,
+  `icon` varchar(64) DEFAULT NULL,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `categories_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categories`
+--
+
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'ASSCOM','asscom','Assessoria de Comunicação','#003366',NULL,0,1,'2026-03-07 21:34:28','2026-03-07 21:34:28'),(2,'Comunicados Intranet','comunicados-intranet','Intranet','#000000',NULL,0,1,'2026-03-07 21:35:02','2026-03-07 21:35:02'),(3,'COOGEP','coogep','Gestão de Pessoas / RH','#660050',NULL,0,1,'2026-03-07 21:35:39','2026-03-07 21:35:39'),(4,'ASSTIC','asstic','Tecnologia da Informação','#296600',NULL,0,1,'2026-03-07 21:36:01','2026-03-07 21:36:01'),(5,'COOSIP','coosip','Coordenação de Saúde','#c2db00',NULL,0,1,'2026-03-07 21:36:45','2026-03-07 21:36:45');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `color_themes`
+--
+
+DROP TABLE IF EXISTS `color_themes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `color_themes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` text,
+  `primaryColor` varchar(7) NOT NULL DEFAULT '#003366',
+  `secondaryColor` varchar(7) NOT NULL DEFAULT '#D4AF37',
+  `accentColor` varchar(7) NOT NULL DEFAULT '#0066CC',
+  `textColor` varchar(7) NOT NULL DEFAULT '#333333',
+  `textLightColor` varchar(7) NOT NULL DEFAULT '#666666',
+  `backgroundColor` varchar(7) NOT NULL DEFAULT '#FFFFFF',
+  `surfaceColor` varchar(7) NOT NULL DEFAULT '#F5F5F5',
+  `searchBgColor` varchar(7) NOT NULL DEFAULT '#003366',
+  `searchTextColor` varchar(7) NOT NULL DEFAULT '#FFFFFF',
+  `searchBorderColor` varchar(7) NOT NULL DEFAULT '#D4AF37',
+  `isActive` tinyint(1) NOT NULL DEFAULT '0',
+  `isDefault` tinyint(1) NOT NULL DEFAULT '0',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `color_themes`
+--
+
+LOCK TABLES `color_themes` WRITE;
+/*!40000 ALTER TABLE `color_themes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `color_themes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comments`
+--
+
+DROP TABLE IF EXISTS `comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `comments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `postId` int NOT NULL,
+  `authorName` varchar(255) NOT NULL,
+  `authorEmail` varchar(320) NOT NULL,
+  `content` text NOT NULL,
+  `status` enum('pending','approved','rejected','spam') NOT NULL DEFAULT 'pending',
+  `moderatedBy` int DEFAULT NULL,
+  `moderationReason` text,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comments`
+--
+
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `document_categories`
+--
+
+DROP TABLE IF EXISTS `document_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `document_categories` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `description` text,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `document_categories_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `document_categories`
+--
+
+LOCK TABLES `document_categories` WRITE;
+/*!40000 ALTER TABLE `document_categories` DISABLE KEYS */;
+INSERT INTO `document_categories` VALUES (1,'Cardápio','cardapio','Cardápio gerado pela Divisão de Nutrição do DEGASE',0,1,'2026-03-07 21:29:50','2026-03-07 21:29:50'),(2,'Downloads','downloads','',0,1,'2026-03-09 17:35:24','2026-03-09 17:35:24');
+/*!40000 ALTER TABLE `document_categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `document_download_stats`
+--
+
+DROP TABLE IF EXISTS `document_download_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `document_download_stats` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `documentId` int NOT NULL,
+  `totalDownloads` int NOT NULL DEFAULT '0',
+  `lastDownloadedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `document_download_stats_documentId_documents_id_fk` (`documentId`),
+  CONSTRAINT `document_download_stats_documentId_documents_id_fk` FOREIGN KEY (`documentId`) REFERENCES `documents` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `document_download_stats`
+--
+
+LOCK TABLES `document_download_stats` WRITE;
+/*!40000 ALTER TABLE `document_download_stats` DISABLE KEYS */;
+/*!40000 ALTER TABLE `document_download_stats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `document_downloads`
+--
+
+DROP TABLE IF EXISTS `document_downloads`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `document_downloads` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `documentId` int NOT NULL,
+  `versionId` int DEFAULT NULL,
+  `userAgent` varchar(500) DEFAULT NULL,
+  `ipAddress` varchar(45) DEFAULT NULL,
+  `downloadedAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`),
+  KEY `document_downloads_documentId_documents_id_fk` (`documentId`),
+  KEY `document_downloads_versionId_document_versions_id_fk` (`versionId`),
+  CONSTRAINT `document_downloads_documentId_documents_id_fk` FOREIGN KEY (`documentId`) REFERENCES `documents` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `document_downloads_versionId_document_versions_id_fk` FOREIGN KEY (`versionId`) REFERENCES `document_versions` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `document_downloads`
+--
+
+LOCK TABLES `document_downloads` WRITE;
+/*!40000 ALTER TABLE `document_downloads` DISABLE KEYS */;
+/*!40000 ALTER TABLE `document_downloads` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `document_versions`
+--
+
+DROP TABLE IF EXISTS `document_versions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `document_versions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `documentId` int NOT NULL,
+  `versionNumber` int NOT NULL,
+  `fileUrl` varchar(1024) NOT NULL,
+  `fileKey` varchar(1024) NOT NULL,
+  `fileSize` int NOT NULL,
+  `mimeType` varchar(100) NOT NULL,
+  `uploadedBy` int NOT NULL,
+  `changeDescription` text,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`),
+  KEY `document_versions_documentId_documents_id_fk` (`documentId`),
+  KEY `document_versions_uploadedBy_users_id_fk` (`uploadedBy`),
+  CONSTRAINT `document_versions_documentId_documents_id_fk` FOREIGN KEY (`documentId`) REFERENCES `documents` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `document_versions_uploadedBy_users_id_fk` FOREIGN KEY (`uploadedBy`) REFERENCES `users` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `document_versions`
+--
+
+LOCK TABLES `document_versions` WRITE;
+/*!40000 ALTER TABLE `document_versions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `document_versions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `documents`
+--
+
+DROP TABLE IF EXISTS `documents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `documents` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text,
+  `categoryId` int NOT NULL,
+  `fileUrl` varchar(1024) NOT NULL,
+  `fileKey` varchar(1024) NOT NULL,
+  `fileSize` int NOT NULL,
+  `mimeType` varchar(100) NOT NULL,
+  `uploadedBy` int NOT NULL,
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  `isFeatured` tinyint(1) NOT NULL DEFAULT '0',
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `visibility` enum('site','intranet','both') NOT NULL DEFAULT 'site',
+  PRIMARY KEY (`id`),
+  KEY `documents_categoryId_document_categories_id_fk` (`categoryId`),
+  KEY `documents_uploadedBy_users_id_fk` (`uploadedBy`),
+  CONSTRAINT `documents_categoryId_document_categories_id_fk` FOREIGN KEY (`categoryId`) REFERENCES `document_categories` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `documents_uploadedBy_users_id_fk` FOREIGN KEY (`uploadedBy`) REFERENCES `users` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `documents`
+--
+
+LOCK TABLES `documents` WRITE;
+/*!40000 ALTER TABLE `documents` DISABLE KEYS */;
+INSERT INTO `documents` VALUES (1,'Cardápio JAN/26',NULL,1,'/uploads/documents/1773077676817-t8zt0r.pdf','cardápio 01.2026.pdf',453751,'application/pdf',1,1,'2026-03-09 17:34:36','2026-03-09 17:34:36',0,0,'site'),(2,'Cardápio FEV/26',NULL,1,'/uploads/documents/1773077697270-bus4a7.pdf','cardápio 02.2025_0.pdf',632274,'application/pdf',1,1,'2026-03-09 17:34:57','2026-03-09 17:34:57',0,0,'site'),(3,'Cardápio MAR/26',NULL,1,'/uploads/documents/1773077716190-5eg7dq.pdf','cardápio 03.2026.pdf',526787,'application/pdf',1,1,'2026-03-09 17:35:16','2026-03-09 17:41:21',1,0,'site'),(4,'Degase pelo Degase',NULL,2,'/uploads/documents/1773077750087-hbon9i.pdf','DEGASE_PELO_DEGASE_0.pdf',2100151,'application/pdf',1,1,'2026-03-09 17:35:50','2026-03-09 17:35:50',0,0,'site');
+/*!40000 ALTER TABLE `documents` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `images_bank`
+--
+
+DROP TABLE IF EXISTS `images_bank`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `images_bank` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `url` varchar(1024) NOT NULL,
+  `fileKey` varchar(1024) NOT NULL,
+  `fileName` varchar(255) NOT NULL,
+  `fileSize` int NOT NULL,
+  `mimeType` varchar(100) NOT NULL,
+  `width` int DEFAULT NULL,
+  `height` int DEFAULT NULL,
+  `alt` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `sourceType` enum('post','service','document','banner','manual') NOT NULL,
+  `sourceId` int DEFAULT NULL,
+  `uploadedBy` int NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `images_bank_uploadedBy_users_id_fk` (`uploadedBy`),
+  CONSTRAINT `images_bank_uploadedBy_users_id_fk` FOREIGN KEY (`uploadedBy`) REFERENCES `users` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `images_bank`
+--
+
+LOCK TABLES `images_bank` WRITE;
+/*!40000 ALTER TABLE `images_bank` DISABLE KEYS */;
+/*!40000 ALTER TABLE `images_bank` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `media_library`
+--
+
+DROP TABLE IF EXISTS `media_library`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `media_library` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` text,
+  `url` text NOT NULL,
+  `fileKey` varchar(500) NOT NULL,
+  `fileType` enum('image','video') NOT NULL,
+  `mimeType` varchar(100) NOT NULL,
+  `fileSize` int DEFAULT NULL,
+  `width` int DEFAULT NULL,
+  `height` int DEFAULT NULL,
+  `duration` int DEFAULT NULL,
+  `uploadedBy` int NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `media_library`
+--
+
+LOCK TABLES `media_library` WRITE;
+/*!40000 ALTER TABLE `media_library` DISABLE KEYS */;
+/*!40000 ALTER TABLE `media_library` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `menuItems`
+--
+
+DROP TABLE IF EXISTS `menuItems`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `menuItems` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) NOT NULL,
+  `linkType` enum('internal','external') NOT NULL,
+  `internalPageId` int DEFAULT NULL,
+  `externalUrl` varchar(1024) DEFAULT NULL,
+  `parentId` int DEFAULT NULL,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `openInNewTab` tinyint(1) NOT NULL DEFAULT '0',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  `isColumnTitle` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `menu_items_internalPageId_pages_id_fk` (`internalPageId`),
+  KEY `menu_items_parentId_menu_items_id_fk` (`parentId`),
+  CONSTRAINT `menu_items_internalPageId_pages_id_fk` FOREIGN KEY (`internalPageId`) REFERENCES `pages` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `menu_items_parentId_menu_items_id_fk` FOREIGN KEY (`parentId`) REFERENCES `menuItems` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menuItems`
+--
+
+LOCK TABLES `menuItems` WRITE;
+/*!40000 ALTER TABLE `menuItems` DISABLE KEYS */;
+/*!40000 ALTER TABLE `menuItems` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `menu_access_permissions`
+--
+
+DROP TABLE IF EXISTS `menu_access_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `menu_access_permissions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `role` enum('user','admin','contributor') NOT NULL,
+  `menuItemId` int NOT NULL,
+  `canAccess` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menu_access_permissions`
+--
+
+LOCK TABLES `menu_access_permissions` WRITE;
+/*!40000 ALTER TABLE `menu_access_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `menu_access_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `page_block_items`
+--
+
+DROP TABLE IF EXISTS `page_block_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `page_block_items` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `blockId` int NOT NULL,
+  `itemType` enum('service','documentCategory','image') NOT NULL,
+  `itemId` int DEFAULT NULL,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `customData` json DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`),
+  KEY `page_block_items_blockId_page_blocks_id_fk` (`blockId`),
+  CONSTRAINT `page_block_items_blockId_page_blocks_id_fk` FOREIGN KEY (`blockId`) REFERENCES `page_blocks` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `page_block_items`
+--
+
+LOCK TABLES `page_block_items` WRITE;
+/*!40000 ALTER TABLE `page_block_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `page_block_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `page_blocks`
+--
+
+DROP TABLE IF EXISTS `page_blocks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `page_blocks` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pageId` int NOT NULL,
+  `blockType` enum('services','documentCategories','images','text','html') NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `description` text,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `config` json DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `page_blocks_pageId_pages_id_fk` (`pageId`),
+  CONSTRAINT `page_blocks_pageId_pages_id_fk` FOREIGN KEY (`pageId`) REFERENCES `pages` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `page_blocks`
+--
+
+LOCK TABLES `page_blocks` WRITE;
+/*!40000 ALTER TABLE `page_blocks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `page_blocks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `page_history`
+--
+
+DROP TABLE IF EXISTS `page_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `page_history` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pageId` int NOT NULL,
+  `title` varchar(500) NOT NULL,
+  `content` text NOT NULL,
+  `excerpt` text,
+  `featuredImage` text,
+  `status` enum('draft','published','archived') NOT NULL DEFAULT 'draft',
+  `menuLabel` varchar(255) DEFAULT NULL,
+  `showInMenu` tinyint(1) NOT NULL DEFAULT '0',
+  `editorId` int DEFAULT NULL,
+  `changeDescription` varchar(500) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `page_history`
+--
+
+LOCK TABLES `page_history` WRITE;
+/*!40000 ALTER TABLE `page_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `page_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pages`
+--
+
+DROP TABLE IF EXISTS `pages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pages` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(500) NOT NULL,
+  `slug` varchar(500) NOT NULL,
+  `content` text NOT NULL,
+  `excerpt` text,
+  `featuredImage` text,
+  `parentId` int DEFAULT NULL,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `status` enum('draft','published','archived') NOT NULL DEFAULT 'draft',
+  `showInMenu` tinyint(1) NOT NULL DEFAULT '0',
+  `menuLabel` varchar(128) DEFAULT NULL,
+  `authorId` int DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  `visibility` enum('site','intranet','both') NOT NULL DEFAULT 'site',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pages_slug_unique` (`slug`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pages`
+--
+
+LOCK TABLES `pages` WRITE;
+/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `password_reset_tokens`
+--
+
+DROP TABLE IF EXISTS `password_reset_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `password_reset_tokens` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `userId` int NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `expiresAt` timestamp NOT NULL,
+  `usedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `password_reset_tokens_token_unique` (`token`),
+  KEY `password_reset_tokens_userId_users_id_fk` (`userId`),
+  CONSTRAINT `password_reset_tokens_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `password_reset_tokens`
+--
+
+LOCK TABLES `password_reset_tokens` WRITE;
+/*!40000 ALTER TABLE `password_reset_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `password_reset_tokens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `post_history`
+--
+
+DROP TABLE IF EXISTS `post_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `post_history` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `postId` int NOT NULL,
+  `title` varchar(500) NOT NULL,
+  `excerpt` text,
+  `content` text NOT NULL,
+  `featuredImage` text,
+  `status` enum('draft','published','archived','scheduled') NOT NULL DEFAULT 'draft',
+  `isFeatured` tinyint(1) NOT NULL DEFAULT '0',
+  `editorId` int DEFAULT NULL,
+  `changeDescription` varchar(500) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `post_history`
+--
+
+LOCK TABLES `post_history` WRITE;
+/*!40000 ALTER TABLE `post_history` DISABLE KEYS */;
+INSERT INTO `post_history` VALUES (1,1,'DEGASE e SMS-Rio alinham ações para ampliar acesso à saúde de adolescentes na Ilha do Governador','O Degase recebeu, na última terça-feira (02/12) representantes da Secretaria Municipal de Saúde do Rio de Janeiro (SMS-Rio) para ajustar fluxos e ampliar o acesso de adolescentes em cumprimento de medida socioeducativa aos serviços de saúde na Ilha do Governador.','<p>O Degase recebeu, na última terça-feira (02/12) representantes da Secretaria Municipal de Saúde do Rio de Janeiro (SMS-Rio) para ajustar fluxos e ampliar o acesso de adolescentes em cumprimento de medida socioeducativa aos serviços de saúde na Ilha do Governador.</p><p style=\"text-align: justify;\">O encontro teve como foco a definição de locais de atendimento, a organização da circulação pelo território e a padronização dos encaminhamentos, visando garantir atendimento integrado entre a rede municipal e as unidades socioeducativas.</p><p style=\"text-align: justify;\">As equipes reforçaram a aplicação da Política Nacional de Atenção Integral à Saúde de Adolescentes em Regimes de Internação (PNAISARI), que reconhece a incompletude institucional e determina a atuação conjunta entre saúde e socioeducação.</p><p style=\"text-align: justify;\">As tratativas avançaram na consolidação de fluxos que asseguram maior eficiência no atendimento e continuidade do cuidado no SUS, sendo essa articulação uma estratégia central para garantir a proteção integral e o direito à saúde dos adolescentes.</p>',NULL,'draft',1,1,'Post criado','2026-03-07 21:34:02'),(2,2,'Degase firma cooperação técnica com Fundação Casa para fortalecer políticas socioeducativas','Parceria visa modernizar a gestão e ampliar a proteção a adolescentes em cumprimento de medidas socioeducativas ','<p></p><p>O Departamento Geral de Ações Socioeducativas do Estado do Rio de Janeiro (Degase) firmou um Acordo de Cooperação Técnica com a Fundação Centro de Atendimento Socioeducativo ao Adolescente (Fundação Casa), de São Paulo, com o objetivo de fortalecer as políticas socioeducativas, modernizar a gestão pública e aprimorar o atendimento a adolescentes em cumprimento de medidas socioeducativas.</p><p style=\"text-align: justify;\"><br>A parceria prevê a troca de experiências, apoio técnico e integração de práticas entre as duas instituições, promovendo mais eficiência, qualidade e proteção integral aos jovens atendidos. O foco está na qualificação das ações socioeducativas, no aperfeiçoamento dos processos de gestão e na construção de soluções conjuntas para o sistema socioeducativo.</p><p style=\"text-align: justify;\">O acordo estabelece que as ações serão desenvolvidas em regime de cooperação mútua, sem transferência de recursos financeiros entre os órgãos. Cada instituição será responsável pelas despesas necessárias à execução das atividades, como deslocamentos, comunicação e apoio técnico.</p><p style=\"text-align: justify;\">Além disso, serão designados gestores para acompanhar e avaliar a execução da parceria, com revisões periódicas a cada três meses, garantindo transparência, eficiência e cumprimento dos objetivos previstos no plano de trabalho.</p><p style=\"text-align: justify;\">Para o diretor-geral do Degase, Victor Poubel, o acordo representa um avanço importante para o estado do Rio de Janeiro.</p><p style=\"text-align: justify;\">- Essa cooperação fortalece o nosso trabalho ao permitir a troca de conhecimentos e boas práticas entre duas grandes instituições do país. O objetivo é garantir um atendimento cada vez mais humanizado, eficiente e comprometido com o futuro dos adolescentes- destacou.</p><p style=\"text-align: justify;\">A vigência do acordo vai até o dia 1 de janeiro de 2027, podendo ser prorrogada. Durante esse período, as instituições atuarão de forma integrada, respeitando a legislação vigente, o Estatuto da Criança e do Adolescente (ECA) e o Sistema Nacional de Atendimento Socioeducativo (Sinase).</p><p style=\"text-align: justify;\">A iniciativa reforça o compromisso do Degase com a modernização do sistema socioeducativo e com a construção de políticas públicas mais eficazes, que promovam cidadania, inclusão e novas oportunidades para adolescentes em situação de vulnerabilidade. &nbsp;</p>',NULL,'published',1,1,'Post criado','2026-03-07 22:01:34'),(3,3,'Degase executará obras de adequação estrutural e expansão da rede socioeducativa em 2026','Governo do Estado inicia, em 2026, obras de reestruturação em unidades do Degase e amplia vagas no sistema socioeducativo','<p>O Governo do Estado do Rio de Janeiro dará início, em 2026, a um conjunto de obras em seis unidades do Degase localizadas no Perímetro Socioeducativo da Ilha do Governador, além da construção de uma nova Unidade de Acautelamento para jovens. As intervenções têm como objetivo adequar as estruturas físicas ao padrão estabelecido pelo Sistema Nacional de Atendimento Socioeducativo (Sinase), assegurando melhores condições de acolhimento, segurança e execução das medidas socioeducativas.</p><p style=\"text-align: justify;\">As obras foram planejadas com base em critérios técnicos e legais e serão executadas por equipes do Degase e da Empresa de Obras Públicas do Estado do Rio de Janeiro (Emop-RJ). Durante todo o período de intervenções, o atendimento aos socioeducandos será mantido.</p><p style=\"text-align: justify;\">Uma das principais mudanças previstas ocorre no Cense Aeroporto Dom Bosco, que será dividido em duas unidades, permitindo a redistribuição dos socioeducandos. Cada unidade terá capacidade para 40 vagas, sendo uma destinada à medida de internação definitiva e outra à internação provisória. As duas funcionarão no mesmo espaço intramuros, com direções e equipes próprias, compartilhando áreas como escola, biblioteca e campo de futebol, conforme as diretrizes do Sinase.</p><p style=\"text-align: justify;\">O Centro de Socioeducação Canárias João Luiz Alves passará por obras de restauração da fachada e das áreas internas. Intervenções semelhantes serão realizadas no Cense Professor Antonio Carlos Gomes da Costa, que também contará com ampliação de áreas verdes e adequação da quadra esportiva.</p><p style=\"text-align: justify;\">No Cense Maria Luiza Marcate Ramos, estão previstas a construção de uma escola, refeitório e alojamento para agentes socioeducativos, além de adequações nos espaços administrativos e técnicos. Já no Cense Ilha do Governador, o projeto inclui a construção de dois dormitórios, duas salas de atividades, um solarium e um novo muro de divisa, ampliando a capacidade e qualificando os espaços de convivência.</p><p style=\"text-align: justify;\">A unidade Gelso de Carvalho Amaral, atualmente destinada ao acautelamento, será transformada em uma Unidade de Internação Provisória, com capacidade para 40 vagas. Além disso, será construída uma nova Unidade de Acautelamento, autônoma, voltada para jovens oriundos de fora da capital, com 30 vagas. Juntas, as duas estruturas representarão a criação de 70 novas vagas no sistema.</p><p style=\"text-align: justify;\">No primeiro trimestre de 2026, será concluída a Unidade Feminina de Internação Provisória, com capacidade para 19 jovens. A iniciativa permitirá aliviar a sobrecarga da atual Unidade Feminina Professor Antônio Carlos Gomes da Costa (PACGC), que passará a concentrar apenas as medidas de internação definitiva e acautelamento, totalizando 44 vagas.</p><p style=\"text-align: justify;\">Novas unidades em 2026</p><p style=\"text-align: justify;\">O Governo do Estado também ampliará a capacidade do sistema com a inauguração de novas unidades em 2026. Em janeiro, serão entregues duas unidades de internação, uma em São Gonçalo e outra em Bangu, com 40 vagas cada. Em abril, serão concluídas as obras da Unidade de Internação e da Unidade de Semiliberdade em Cabo Frio, somando 60 vagas.</p><p style=\"text-align: justify;\">Além disso, três unidades de semiliberdade, localizadas em São Gonçalo, Riachuelo e Padre Miguel, passarão por adequações, gerando mais 60 vagas. As novas instalações da Unidade Leopoldina também serão concluídas no início do próximo ano.</p><p style=\"text-align: justify;\">Segundo o diretor-geral do Degase, Victor Poubel, as obras integram um processo amplo de reestruturação institucional. “O Degase vem passando por um processo consistente de reestruturação. Essas obras fazem parte de uma estratégia para corrigir passivos históricos, adequar os espaços ao que a legislação exige e oferecer melhores condições de trabalho aos servidores e de atendimento aos jovens. Estamos reorganizando a rede de forma planejada, o que traz mais eficiência, segurança e qualidade no atendimento socioeducativo”, afirmou.</p><p style=\"text-align: justify;\">Concurso público</p><p style=\"text-align: justify;\">Ao todo, as intervenções resultarão na criação de 394 novas vagas no sistema socioeducativo fluminense, todas dentro dos padrões legais. Para garantir o funcionamento das novas unidades, está em andamento o concurso público do Degase para o provimento de 564 vagas.</p><p style=\"text-align: justify;\">O certame representa um marco na reestruturação institucional do órgão, que não realizava seleção pública desde 2011.</p>','/uploads/images/1773076414501-mtk0fo.jpeg','published',1,1,'Post criado','2026-03-09 17:14:12');
+/*!40000 ALTER TABLE `post_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `post_tags`
+--
+
+DROP TABLE IF EXISTS `post_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `post_tags` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `postId` int NOT NULL,
+  `tagId` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `post_tags`
+--
+
+LOCK TABLES `post_tags` WRITE;
+/*!40000 ALTER TABLE `post_tags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `post_tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `post_view_limits`
+--
+
+DROP TABLE IF EXISTS `post_view_limits`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `post_view_limits` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `postId` int NOT NULL,
+  `ipAddress` varchar(45) NOT NULL,
+  `viewedAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`),
+  KEY `post_view_limits_postId_posts_id_fk` (`postId`),
+  CONSTRAINT `post_view_limits_postId_posts_id_fk` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `post_view_limits`
+--
+
+LOCK TABLES `post_view_limits` WRITE;
+/*!40000 ALTER TABLE `post_view_limits` DISABLE KEYS */;
+/*!40000 ALTER TABLE `post_view_limits` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `posts`
+--
+
+DROP TABLE IF EXISTS `posts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `posts` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(500) NOT NULL,
+  `slug` varchar(500) NOT NULL,
+  `excerpt` text,
+  `content` text NOT NULL,
+  `featuredImage` text,
+  `categoryId` int DEFAULT NULL,
+  `authorId` int DEFAULT NULL,
+  `status` enum('draft','published','archived','scheduled') NOT NULL DEFAULT 'draft',
+  `publishedAt` timestamp NULL DEFAULT NULL,
+  `scheduledAt` timestamp NULL DEFAULT NULL,
+  `isScheduled` tinyint(1) NOT NULL DEFAULT '0',
+  `isFeatured` tinyint(1) NOT NULL DEFAULT '0',
+  `viewCount` int NOT NULL DEFAULT '0',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  `visibility` enum('site','intranet','both') NOT NULL DEFAULT 'site',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `posts_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `posts`
+--
+
+LOCK TABLES `posts` WRITE;
+/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+INSERT INTO `posts` VALUES (1,'DEGASE e SMS-Rio alinham ações para ampliar acesso à saúde de adolescentes na Ilha do Governador','degase-e-sms-rio-alinham-acoes-para-ampliar-acesso-a-saude-de-adolescentes-na-ilha-do-governador','O Degase recebeu, na última terça-feira (02/12) representantes da Secretaria Municipal de Saúde do Rio de Janeiro (SMS-Rio) para ajustar fluxos e ampliar o acesso de adolescentes em cumprimento de medida socioeducativa aos serviços de saúde na Ilha do Governador.','<p>O Degase recebeu, na última terça-feira (02/12) representantes da Secretaria Municipal de Saúde do Rio de Janeiro (SMS-Rio) para ajustar fluxos e ampliar o acesso de adolescentes em cumprimento de medida socioeducativa aos serviços de saúde na Ilha do Governador.</p><p style=\"text-align: justify;\">O encontro teve como foco a definição de locais de atendimento, a organização da circulação pelo território e a padronização dos encaminhamentos, visando garantir atendimento integrado entre a rede municipal e as unidades socioeducativas.</p><p style=\"text-align: justify;\">As equipes reforçaram a aplicação da Política Nacional de Atenção Integral à Saúde de Adolescentes em Regimes de Internação (PNAISARI), que reconhece a incompletude institucional e determina a atuação conjunta entre saúde e socioeducação.</p><p style=\"text-align: justify;\">As tratativas avançaram na consolidação de fluxos que asseguram maior eficiência no atendimento e continuidade do cuidado no SUS, sendo essa articulação uma estratégia central para garantir a proteção integral e o direito à saúde dos adolescentes.</p>',NULL,NULL,1,'draft',NULL,NULL,0,1,0,'2026-03-07 21:34:02','2026-03-07 21:34:02','site'),(2,'Degase firma cooperação técnica com Fundação Casa para fortalecer políticas socioeducativas','degase-firma-cooperacao-tecnica-com-fundacao-casa-para-fortalecer-politicas-socioeducativas','Parceria visa modernizar a gestão e ampliar a proteção a adolescentes em cumprimento de medidas socioeducativas ','<p></p><p>O Departamento Geral de Ações Socioeducativas do Estado do Rio de Janeiro (Degase) firmou um Acordo de Cooperação Técnica com a Fundação Centro de Atendimento Socioeducativo ao Adolescente (Fundação Casa), de São Paulo, com o objetivo de fortalecer as políticas socioeducativas, modernizar a gestão pública e aprimorar o atendimento a adolescentes em cumprimento de medidas socioeducativas.</p><p style=\"text-align: justify;\"><br>A parceria prevê a troca de experiências, apoio técnico e integração de práticas entre as duas instituições, promovendo mais eficiência, qualidade e proteção integral aos jovens atendidos. O foco está na qualificação das ações socioeducativas, no aperfeiçoamento dos processos de gestão e na construção de soluções conjuntas para o sistema socioeducativo.</p><p style=\"text-align: justify;\">O acordo estabelece que as ações serão desenvolvidas em regime de cooperação mútua, sem transferência de recursos financeiros entre os órgãos. Cada instituição será responsável pelas despesas necessárias à execução das atividades, como deslocamentos, comunicação e apoio técnico.</p><p style=\"text-align: justify;\">Além disso, serão designados gestores para acompanhar e avaliar a execução da parceria, com revisões periódicas a cada três meses, garantindo transparência, eficiência e cumprimento dos objetivos previstos no plano de trabalho.</p><p style=\"text-align: justify;\">Para o diretor-geral do Degase, Victor Poubel, o acordo representa um avanço importante para o estado do Rio de Janeiro.</p><p style=\"text-align: justify;\">- Essa cooperação fortalece o nosso trabalho ao permitir a troca de conhecimentos e boas práticas entre duas grandes instituições do país. O objetivo é garantir um atendimento cada vez mais humanizado, eficiente e comprometido com o futuro dos adolescentes- destacou.</p><p style=\"text-align: justify;\">A vigência do acordo vai até o dia 1 de janeiro de 2027, podendo ser prorrogada. Durante esse período, as instituições atuarão de forma integrada, respeitando a legislação vigente, o Estatuto da Criança e do Adolescente (ECA) e o Sistema Nacional de Atendimento Socioeducativo (Sinase).</p><p style=\"text-align: justify;\">A iniciativa reforça o compromisso do Degase com a modernização do sistema socioeducativo e com a construção de políticas públicas mais eficazes, que promovam cidadania, inclusão e novas oportunidades para adolescentes em situação de vulnerabilidade. &nbsp;</p>',NULL,1,1,'published',NULL,NULL,0,1,0,'2026-03-07 22:01:34','2026-03-07 22:01:34','site'),(3,'Degase executará obras de adequação estrutural e expansão da rede socioeducativa em 2026','degase-executara-obras-de-adequacao-estrutural-e-expansao-da-rede-socioeducativa-em-2026','Governo do Estado inicia, em 2026, obras de reestruturação em unidades do Degase e amplia vagas no sistema socioeducativo','<p>O Governo do Estado do Rio de Janeiro dará início, em 2026, a um conjunto de obras em seis unidades do Degase localizadas no Perímetro Socioeducativo da Ilha do Governador, além da construção de uma nova Unidade de Acautelamento para jovens. As intervenções têm como objetivo adequar as estruturas físicas ao padrão estabelecido pelo Sistema Nacional de Atendimento Socioeducativo (Sinase), assegurando melhores condições de acolhimento, segurança e execução das medidas socioeducativas.</p><p style=\"text-align: justify;\">As obras foram planejadas com base em critérios técnicos e legais e serão executadas por equipes do Degase e da Empresa de Obras Públicas do Estado do Rio de Janeiro (Emop-RJ). Durante todo o período de intervenções, o atendimento aos socioeducandos será mantido.</p><p style=\"text-align: justify;\">Uma das principais mudanças previstas ocorre no Cense Aeroporto Dom Bosco, que será dividido em duas unidades, permitindo a redistribuição dos socioeducandos. Cada unidade terá capacidade para 40 vagas, sendo uma destinada à medida de internação definitiva e outra à internação provisória. As duas funcionarão no mesmo espaço intramuros, com direções e equipes próprias, compartilhando áreas como escola, biblioteca e campo de futebol, conforme as diretrizes do Sinase.</p><p style=\"text-align: justify;\">O Centro de Socioeducação Canárias João Luiz Alves passará por obras de restauração da fachada e das áreas internas. Intervenções semelhantes serão realizadas no Cense Professor Antonio Carlos Gomes da Costa, que também contará com ampliação de áreas verdes e adequação da quadra esportiva.</p><p style=\"text-align: justify;\">No Cense Maria Luiza Marcate Ramos, estão previstas a construção de uma escola, refeitório e alojamento para agentes socioeducativos, além de adequações nos espaços administrativos e técnicos. Já no Cense Ilha do Governador, o projeto inclui a construção de dois dormitórios, duas salas de atividades, um solarium e um novo muro de divisa, ampliando a capacidade e qualificando os espaços de convivência.</p><p style=\"text-align: justify;\">A unidade Gelso de Carvalho Amaral, atualmente destinada ao acautelamento, será transformada em uma Unidade de Internação Provisória, com capacidade para 40 vagas. Além disso, será construída uma nova Unidade de Acautelamento, autônoma, voltada para jovens oriundos de fora da capital, com 30 vagas. Juntas, as duas estruturas representarão a criação de 70 novas vagas no sistema.</p><p style=\"text-align: justify;\">No primeiro trimestre de 2026, será concluída a Unidade Feminina de Internação Provisória, com capacidade para 19 jovens. A iniciativa permitirá aliviar a sobrecarga da atual Unidade Feminina Professor Antônio Carlos Gomes da Costa (PACGC), que passará a concentrar apenas as medidas de internação definitiva e acautelamento, totalizando 44 vagas.</p><p style=\"text-align: justify;\">Novas unidades em 2026</p><p style=\"text-align: justify;\">O Governo do Estado também ampliará a capacidade do sistema com a inauguração de novas unidades em 2026. Em janeiro, serão entregues duas unidades de internação, uma em São Gonçalo e outra em Bangu, com 40 vagas cada. Em abril, serão concluídas as obras da Unidade de Internação e da Unidade de Semiliberdade em Cabo Frio, somando 60 vagas.</p><p style=\"text-align: justify;\">Além disso, três unidades de semiliberdade, localizadas em São Gonçalo, Riachuelo e Padre Miguel, passarão por adequações, gerando mais 60 vagas. As novas instalações da Unidade Leopoldina também serão concluídas no início do próximo ano.</p><p style=\"text-align: justify;\">Segundo o diretor-geral do Degase, Victor Poubel, as obras integram um processo amplo de reestruturação institucional. “O Degase vem passando por um processo consistente de reestruturação. Essas obras fazem parte de uma estratégia para corrigir passivos históricos, adequar os espaços ao que a legislação exige e oferecer melhores condições de trabalho aos servidores e de atendimento aos jovens. Estamos reorganizando a rede de forma planejada, o que traz mais eficiência, segurança e qualidade no atendimento socioeducativo”, afirmou.</p><p style=\"text-align: justify;\">Concurso público</p><p style=\"text-align: justify;\">Ao todo, as intervenções resultarão na criação de 394 novas vagas no sistema socioeducativo fluminense, todas dentro dos padrões legais. Para garantir o funcionamento das novas unidades, está em andamento o concurso público do Degase para o provimento de 564 vagas.</p><p style=\"text-align: justify;\">O certame representa um marco na reestruturação institucional do órgão, que não realizava seleção pública desde 2011.</p>','/uploads/images/1773076414501-mtk0fo.jpeg',1,1,'published',NULL,NULL,0,1,3,'2026-03-09 17:14:12','2026-03-11 11:27:49','site');
+/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `service_analytics`
+--
+
+DROP TABLE IF EXISTS `service_analytics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `service_analytics` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `serviceId` int NOT NULL,
+  `clickCount` int NOT NULL DEFAULT '0',
+  `lastClickedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `service_analytics_serviceId_services_id_fk` (`serviceId`),
+  CONSTRAINT `service_analytics_serviceId_services_id_fk` FOREIGN KEY (`serviceId`) REFERENCES `services` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `service_analytics`
+--
+
+LOCK TABLES `service_analytics` WRITE;
+/*!40000 ALTER TABLE `service_analytics` DISABLE KEYS */;
+/*!40000 ALTER TABLE `service_analytics` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `service_click_log`
+--
+
+DROP TABLE IF EXISTS `service_click_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `service_click_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `serviceId` int NOT NULL,
+  `userAgent` varchar(500) DEFAULT NULL,
+  `referer` varchar(1024) DEFAULT NULL,
+  `ipAddress` varchar(45) DEFAULT NULL,
+  `clickedAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`),
+  KEY `service_click_log_serviceId_services_id_fk` (`serviceId`),
+  CONSTRAINT `service_click_log_serviceId_services_id_fk` FOREIGN KEY (`serviceId`) REFERENCES `services` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `service_click_log`
+--
+
+LOCK TABLES `service_click_log` WRITE;
+/*!40000 ALTER TABLE `service_click_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `service_click_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `services`
+--
+
+DROP TABLE IF EXISTS `services`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `services` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `icon` varchar(500) NOT NULL,
+  `link` varchar(1024) NOT NULL,
+  `color` varchar(7) NOT NULL DEFAULT '#0066CC',
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  `visibility` enum('site','intranet','both') NOT NULL DEFAULT 'site',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `services`
+--
+
+LOCK TABLES `services` WRITE;
+/*!40000 ALTER TABLE `services` DISABLE KEYS */;
+INSERT INTO `services` VALUES (1,'SEI','https://play-lh.googleusercontent.com/73kplpWw-6IJu9xZbqOZ0opzPEiZqVJeOST6FOmUJjlPZ1c7Gz3c3dSdz2tYIs7YwY1S=w240-h480-rw','https://sei.rj.gov.br/sei','#0066CC',0,1,'2026-03-07 22:13:59','2026-03-07 22:13:59','site'),(2,'GLPI Suporte','https://servicos.degase.rj.gov.br/favicon.ico','https://servicos.degase.rj.gov.br/suporte','#0d9603',1,1,'2026-03-07 22:14:49','2026-03-07 22:14:49','site'),(3,'SIIAD','https://servicos.degase.rj.gov.br/favicon.ico','http://10.200.97.35:8080/DegaseWeb/acesso/index.html','#ccaa00',3,1,'2026-03-09 14:23:01','2026-03-10 18:23:19','site'),(4,'Ouvidoria','https://servicos.degase.rj.gov.br/favicon.ico','https://servicos.degase.rj.gov.br/ouvidoria','#000000',4,1,'2026-03-10 18:24:33','2026-03-11 11:25:34','intranet');
+/*!40000 ALTER TABLE `services` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `site_config`
+--
+
+DROP TABLE IF EXISTS `site_config`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `site_config` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `configKey` varchar(128) NOT NULL,
+  `configValue` text,
+  `description` text,
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `site_config_configKey_unique` (`configKey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `site_config`
+--
+
+LOCK TABLES `site_config` WRITE;
+/*!40000 ALTER TABLE `site_config` DISABLE KEYS */;
+/*!40000 ALTER TABLE `site_config` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `social_media_shares`
+--
+
+DROP TABLE IF EXISTS `social_media_shares`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `social_media_shares` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `postId` int NOT NULL,
+  `platform` varchar(50) NOT NULL,
+  `externalId` varchar(255) DEFAULT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'pending',
+  `errorMessage` text,
+  `sharedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `social_media_shares`
+--
+
+LOCK TABLES `social_media_shares` WRITE;
+/*!40000 ALTER TABLE `social_media_shares` DISABLE KEYS */;
+/*!40000 ALTER TABLE `social_media_shares` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `social_shares`
+--
+
+DROP TABLE IF EXISTS `social_shares`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `social_shares` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `postId` int NOT NULL,
+  `platform` varchar(50) NOT NULL,
+  `ipAddress` varchar(45) NOT NULL,
+  `userAgent` varchar(500) DEFAULT NULL,
+  `sharedAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`),
+  KEY `social_shares_postId_posts_id_fk` (`postId`),
+  CONSTRAINT `social_shares_postId_posts_id_fk` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `social_shares`
+--
+
+LOCK TABLES `social_shares` WRITE;
+/*!40000 ALTER TABLE `social_shares` DISABLE KEYS */;
+/*!40000 ALTER TABLE `social_shares` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tags`
+--
+
+DROP TABLE IF EXISTS `tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tags` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `slug` varchar(128) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tags_slug_unique` (`slug`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tags`
+--
+
+LOCK TABLES `tags` WRITE;
+/*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `transparency_items`
+--
+
+DROP TABLE IF EXISTS `transparency_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `transparency_items` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` text,
+  `linkUrl` text,
+  `icon` varchar(64) DEFAULT NULL,
+  `section` varchar(128) NOT NULL,
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transparency_items`
+--
+
+LOCK TABLES `transparency_items` WRITE;
+/*!40000 ALTER TABLE `transparency_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transparency_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `units`
+--
+
+DROP TABLE IF EXISTS `units`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `units` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(500) NOT NULL,
+  `type` enum('internacao','internacao_provisoria','semiliberdade','meio_aberto') NOT NULL,
+  `address` text,
+  `phone` varchar(64) DEFAULT NULL,
+  `email` varchar(320) DEFAULT NULL,
+  `visitDays` text,
+  `mapsUrl` text,
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `units`
+--
+
+LOCK TABLES `units` WRITE;
+/*!40000 ALTER TABLE `units` DISABLE KEYS */;
+INSERT INTO `units` VALUES (1,'CRIAAD Ilha','semiliberdade','Rua xxx',NULL,NULL,NULL,NULL,1,0,'2026-03-07 22:03:08','2026-03-07 22:03:08'),(2,'CRIAAD Bonsucesso','semiliberdade',NULL,NULL,NULL,NULL,NULL,1,0,'2026-03-09 17:36:34','2026-03-09 17:36:43');
+/*!40000 ALTER TABLE `units` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `openId` varchar(64) NOT NULL,
+  `name` text,
+  `email` varchar(320) DEFAULT NULL,
+  `loginMethod` varchar(64) DEFAULT NULL,
+  `role` enum('user','admin','contributor') NOT NULL DEFAULT 'user',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  `lastSignedIn` timestamp NOT NULL DEFAULT (now()),
+  `categoryId` int DEFAULT NULL,
+  `functionalId` varchar(64) DEFAULT NULL,
+  `passwordHash` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_openId_unique` (`openId`)
+) ENGINE=InnoDB AUTO_INCREMENT=567 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'admin-local-user','Administrador','admin@degase.local','local','admin','2026-03-06 12:29:07','2026-03-31 02:10:05','2026-03-11 22:27:45',NULL,NULL,'$2a$10$XYJeDhYhAsyCRAQBmcXJQ.MeojG1cNcil5Z.v.WQirnBu6S6auwuy'),(89,'157','Zé das Couves','asscom@degase.local',NULL,'contributor','2026-03-07 22:07:17','2026-03-07 22:08:15','2026-03-07 22:07:17',1,NULL,NULL),(234,'5','Usuário Intranet','user@degase.local',NULL,'user','2026-03-09 17:10:17','2026-03-10 18:07:44','2026-03-10 18:07:44',NULL,NULL,'$2b$10$XhC9eN9BaSFKDWgRYtMTNuvcq.pfza0FxMvhOg7vc08X1T5n76EiS'),(529,'csv_053b40d3-1076-49ad-b17e-98cb9570dfca','João Silva','user1@degase.local',NULL,'user','2026-03-11 11:30:10','2026-03-11 11:30:10','2026-03-11 11:30:11',NULL,'12345','$2b$10$I6F0OSaMWVaha58ijJbxTeHiUZZCSSr9bn4CCjWOgbhOy07lkgPPe'),(530,'csv_2c8c6fca-964e-423b-ac01-83f842da73fa','Maria Santos','user2@degase.local',NULL,'user','2026-03-11 11:30:10','2026-03-11 11:30:10','2026-03-11 11:30:11',NULL,'12346','$2b$10$LxVL5Plvc4WOEcauwZ7M8OzkScXgGKtpboTMTCpTFhKu7g2xXSCKe'),(531,'csv_26a938b7-2bfd-4772-b8bb-668dc3666e4f','Pedro Oliveira','user3@degase.local',NULL,'contributor','2026-03-11 11:30:11','2026-03-11 11:30:11','2026-03-11 11:30:11',NULL,'12347','$2b$10$b.sEuAop0qTGYB7245POVO4/AXLf7B0IHJTGM.WFxe5up83xdbHr2');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `videos`
+--
+
+DROP TABLE IF EXISTS `videos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `videos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(500) NOT NULL,
+  `youtubeUrl` text NOT NULL,
+  `description` text,
+  `thumbnailUrl` text,
+  `isFeatured` tinyint(1) NOT NULL DEFAULT '0',
+  `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `sortOrder` int NOT NULL DEFAULT '0',
+  `createdAt` timestamp NOT NULL DEFAULT (now()),
+  `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+  `visibility` enum('site','intranet','both') NOT NULL DEFAULT 'site',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `videos`
+--
+
+LOCK TABLES `videos` WRITE;
+/*!40000 ALTER TABLE `videos` DISABLE KEYS */;
+INSERT INTO `videos` VALUES (1,'Jovem Aprendiz Contratação 2021','https://youtu.be/FkQqOZXU3xk',NULL,NULL,1,1,0,'2026-03-07 22:04:23','2026-03-07 22:04:23','site'),(2,'Jovem Aprendiz 2021','https://youtu.be/Zfov9SqC_2Y',NULL,NULL,1,1,0,'2026-03-07 22:05:26','2026-03-07 22:05:26','site'),(3,'Vamos dançar?','https://youtu.be/GJ2mFN8Pd2c',NULL,NULL,1,1,0,'2026-03-07 22:05:53','2026-03-07 22:05:53','site');
+/*!40000 ALTER TABLE `videos` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-03-31  2:10:30

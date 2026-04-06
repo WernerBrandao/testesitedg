@@ -1,0 +1,47 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portal_app
+    restart: always
+    ports:
+     - "3000:3000"
+    environment:
+      SESSION_SECRET: "Bm4ZF358aZ5uzpKmnZMaGA4MTHdrfBNUANJEe81o35A="
+      JWT_SECRET: "g0qZj8JcU6Zx4N2f7YbP1vKs9wRmTtA2"
+      NODE_ENV: "production"
+      DATABASE_URL: "mysql://degase:Degase@2026@db:3306/portal_db"
+      VITE_API_URL: "http://10.3.138.19:3000"
+      VITE_OAUTH_PORTAL_URL: "http://10.3.138.19:3000"
+      VITE_APP_ID: "degase-admin"
+    depends_on:
+      - db
+    volumes:
+      - /opt/portaldegase/uploads:/opt/portaldegase/uploads
+
+  db:
+    image: mysql:8.0
+    container_name: portal_db_container
+    restart: always
+    environment:
+      MYSQL_DATABASE: portal_db
+      MYSQL_USER: degase
+      MYSQL_PASSWORD: "Degase@2026"
+      MYSQL_ROOT_PASSWORD: "Degase@2026"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    container_name: portal_adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=db # Corrigido para apontar para o serviço 'db'
+    depends_on:
+      - db # Corrigido para depender do serviço 'db'
+
+volumes:
+  db_data:

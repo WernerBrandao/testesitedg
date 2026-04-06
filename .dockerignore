@@ -1,0 +1,10 @@
+node_modules
+dist
+client/dist
+client/.vite
+client/public/__manus__
+*.log
+uploads
+Dockerfile
+docker-compose.yml
+.git
