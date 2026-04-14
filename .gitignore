@@ -1,0 +1,7 @@
+node_modules
+dist
+client/dist-client
+client/.vite
+client/public/__manus__
+*.log
+.git
